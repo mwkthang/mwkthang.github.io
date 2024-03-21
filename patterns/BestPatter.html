@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Infinite Patterns</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        text-align: center;
+        background-color: #fff;
+        font-family: arial;
+      }
+
+      #link {
+        display: block;
+        margin-top: 8px;
+        font-size: 17px;
+        font-weight: bold;
+      }
+
+      button {
+        width: 100px;
+        height: 41px;
+        font-size: 15px;
+        margin: 8px 0px;
+        outline: none;
+        border: none;
+        padding: 3px 0px;
+      }
+
+      #decre,
+      #incre {
+        /*Increment and Decrement button*/
+        background-color: #ffc0cb;
+      }
+
+      #stop,
+      #restart {
+        /*Stop and Restart button*/
+        background-color: #ebd9f7;
+      }
+
+      #decre:active,
+      #incre:active {
+        /*active button*/
+        background-color: #e2bcc2;
+        box-shadow: 0 0 1px 1px rgba(226, 188, 194, 0.5);
+      }
+
+      #stop:active,
+      #restart:active {
+        /*active button*/
+        background-color: #bdb4c1;
+        box-shadow: 0 0 1px 1px rgba(189, 180, 193, 0.5);
+      }
+
+      input[type="number"] {
+        text-align: center;
+        width: 118px;
+        height: 38px;
+        background-color: white;
+        border: 2px solid pink;
+        outline: none;
+        font-size: 20px;
+        margin: 8px 0px;
+        padding: 0px 0px;
+        font-weight: 300;
+        border: #f7f solid 1px;
+        /* -moz-appearance: textfield; */
+      }
+
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type="number"]:focus {
+        box-shadow: 0 0 1px 1px rgba(226, 188, 194, 0.5);
+      }
+
+      canvas {
+        width: 530px;
+      }
+
+      @media only screen and (max-width: 600px) {
+        canvas {
+          width: 100%;
+        }
+        #decre,
+        #incre {
+          width: 32%;
+        }
+        input[type="number"] {
+          margin-left: 0px;
+          margin-right: 0px;
+          width: 34%;
+        }
+        #stop,
+        #restart {
+          margin-top: 4px;
+          width: 49.7%;
+        }
+        button:focus {
+          background-color: #c7c9c9;
+        }
+        #decre,
+        #stop {
+          margin-left: 0px;
+          float: left;
+          margin-right: 0px;
+        }
+        #incre,
+        #restart {
+          margin-right: 0px;
+          float: right;
+          margin-left: 0px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container"></div>
+
+    <button onclick="decrement()" id="decre">PREV</button>
+    <input
+      id="value"
+      value="5"
+      type="number"
+      onkeyup="changeByKeyUp(this.value)"
+    />
+    <button onclick="increment()" id="incre">NEXT</button>
+    <button onclick="Clear()" id="stop">STOP</button>
+    <button onclick="reStart()" id="restart">RESTART</button>
+    <button onclick="toggleBackgroundColor()">Toggle Background Color</button>
+    <br />
+    <a href="#" id="link" onclick="downloadImage()">download-image</a>
+
+    <script>
+      var number = document.getElementById("value");
+      val = parseFloat(number.value);
+
+      var number = document.getElementById("value");
+      val = parseFloat(number.value);
+      var isDarkMode = false; // Variable to track if dark mode is enabled
+
+      let backgroundColor = "#fff"; // Default background color
+      function toggleBackgroundColor() {
+        var body = document.querySelector("body");
+        isDarkMode = !isDarkMode; // Toggle the state of dark mode
+        if (isDarkMode) {
+          backgroundColor = "#000";
+        } else {
+          backgroundColor = "#fff";
+        }
+        body.style.backgroundColor = backgroundColor;
+        // change the background color of the canvas
+        var canvas = document.querySelector("canvas");
+        canvas.style.backgroundColor = backgroundColor;
+      }
+
+      function decrement() {
+        val = val - 1;
+        number.value = val;
+        Clear();
+        start(val);
+      }
+
+      function increment() {
+        val = val + 1;
+        number.value = val;
+        Clear();
+        start(val);
+      }
+
+      function reStart() {
+        Clear();
+        start(val);
+      }
+
+      function changeByKeyUp(x) {
+        val = parseFloat(x);
+        Clear();
+        start(val);
+      }
+      start(val);
+
+      function start(val) {
+        var canvasStr =
+          '<canvas id="myCanvas" width="2000" height="2000" style="border:1px solid #888; background-color:' +
+          backgroundColor +
+          ';" >Your browser does not support the canvas element. </canvas>';
+        var container = document.getElementById("container");
+        container.innerHTML = canvasStr;
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var x = 1000,
+          y = 1000,
+          r = 530,
+          smr = 146; //small radius
+        var check = 2.0;
+        var cc = check,
+          step = Math.sqrt(val),
+          len = Math.sqrt(6);
+        var count = 0;
+        timeInt = setInterval(function () {
+          Radian = Round(cc * Math.PI);
+          dx = Round(r * Math.cos(Radian)); //distance x
+          dy = Round(r * Math.sin(Radian)); //distance y
+          dxBig = Round((r + smr) * Math.cos(Radian)); //distance x for big circle
+          dyBig = Round((r + smr) * Math.sin(Radian)); //distance y for big circle
+          Draw();
+          cc += step;
+          count++;
+          if (count > 5000) {
+            clearInterval(timeInt);
+            console.log(count);
+            increment();
+          }
+        }, 10);
+        var ss = 2.0;
+
+        function Draw() {
+          ss -= Round(step * (r / smr));
+          dxSmall = Round(smr * Math.cos(ss * Math.PI));
+          dySmall = Round(smr * Math.sin(ss * Math.PI));
+          cx1 = Round(x + dx);
+          cy1 = Round(y + dy);
+          cx2 = Round(x + dx + dxSmall);
+          cy2 = y + dy + dySmall;
+          pointX = Round((cx2 - cx1) * len + cx1);
+          pointY = Round(((cy2 - cy1) / (cx2 - cx1)) * (pointX - cx1) + cy1);
+          if (check != cc) {
+            ctx.beginPath();
+            ctx.moveTo(pointX, pointY);
+            ctx.lineTo(pointXsaved, pointYsaved);
+            ctx.strokeStyle = "#f00";
+            ctx.lineWidth = 4.5;
+            ctx.stroke();
+          }
+          pointXsaved = pointX;
+          pointYsaved = pointY;
+        }
+      }
+
+      function Round(val) {
+        place = 10000000000000000;
+        return Math.round(val * place) / place;
+      }
+
+      function downloadImage() {
+        var myCanvas = document.getElementById("myCanvas");
+        var link = document.getElementById("link");
+        var href = myCanvas.toDataURL();
+        link.setAttribute("href", href);
+        link.download = "LemonLab-" + number.value + "-" + makeid() + ".png";
+      }
+
+      function makeid() {
+        var text = "";
+        var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < 10; i++)
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+      }
+
+      function Clear() {
+        clearInterval(timeInt);
+      }
+    </script>
+  </body>
+</html>
