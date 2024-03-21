@@ -133,10 +133,21 @@
     <button onclick="Clear()" id="stop">STOP</button>
     <button onclick="reStart()" id="restart">RESTART</button>
     <button onclick="toggleBackgroundColor()">Toggle Background Color</button>
+    <input
+      type="color"
+      id="lineColor"
+      value="green"
+      onchange="lineColor = this.value"
+    />
+    <button onclick="keep()">Keep</button>
+    <button onclick="back()">Back</button>
     <br />
     <a href="#" id="link" onclick="downloadImage()">download-image</a>
 
+    <p id="keeper" style="color: grey"></p>
+
     <script>
+      var lineColor = "green";
       var number = document.getElementById("value");
       val = parseFloat(number.value);
 
@@ -171,6 +182,18 @@
         number.value = val;
         Clear();
         start(val);
+      }
+
+      function keep() {
+        var keeper = document.getElementById("keeper");
+        keeper.innerHTML += val + ", ";
+      }
+
+      function back() {
+        var keeper = document.getElementById("keeper");
+        let newKeep = keeper.textContent.split(", ");
+        newKeep.pop();
+        keeper.innerHTML = newKeep.join(", ");
       }
 
       function reStart() {
@@ -234,7 +257,7 @@
             ctx.beginPath();
             ctx.moveTo(pointX, pointY);
             ctx.lineTo(pointXsaved, pointYsaved);
-            ctx.strokeStyle = "#f00";
+            ctx.strokeStyle = lineColor;
             ctx.lineWidth = 4.5;
             ctx.stroke();
           }
