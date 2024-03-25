@@ -8,6 +8,7 @@
         text-align: center;
         background-color: #fff;
         font-family: arial;
+        background-color: #000;
       }
 
       #link {
@@ -80,6 +81,7 @@
 
       canvas {
         width: 530px;
+        background-color: #000;
       }
 
       @media only screen and (max-width: 600px) {
@@ -125,7 +127,7 @@
     <button onclick="decrement()" id="decre">PREV</button>
     <input
       id="value"
-      value="5"
+      value="0"
       type="number"
       onkeyup="changeByKeyUp(this.value)"
     />
@@ -133,6 +135,7 @@
     <button onclick="Clear()" id="stop">STOP</button>
     <button onclick="reStart()" id="restart">RESTART</button>
     <button onclick="toggleBackgroundColor()">Toggle Background Color</button>
+    <button onclick="toggleIsBests()" id="is-bests">Serial</button>
     <input
       type="color"
       id="lineColor"
@@ -147,15 +150,20 @@
     <p id="keeper" style="color: grey"></p>
 
     <script>
+      var BESTS = [
+        5, 7.1, 15, 20, 28, 34, 37, 42, 54, 59, 60, 63, 69, 79, 98, 99, 110,
+        112, 117, 118, 119, 136, 147, 149, 193, 197, 238, 240, 243, 252, 253,
+        254, 255, 306, 314, 319, 330,
+      ];
       var lineColor = "green";
       var number = document.getElementById("value");
       val = parseFloat(number.value);
 
-      var number = document.getElementById("value");
-      val = parseFloat(number.value);
-      var isDarkMode = false; // Variable to track if dark mode is enabled
+      // var number = document.getElementById("value");
+      // val = parseFloat(number.value);
+      var isDarkMode = true; // Variable to track if dark mode is enabled
 
-      let backgroundColor = "#fff"; // Default background color
+      let backgroundColor = "#000"; // Default background color
       function toggleBackgroundColor() {
         var body = document.querySelector("body");
         isDarkMode = !isDarkMode; // Toggle the state of dark mode
@@ -168,6 +176,17 @@
         // change the background color of the canvas
         var canvas = document.querySelector("canvas");
         canvas.style.backgroundColor = backgroundColor;
+      }
+
+      var isBests = false;
+      function toggleIsBests() {
+        if (isBests) {
+          isBests = false;
+          document.getElementById("is-bests").textContent = "Serial";
+        } else {
+          isBests = true;
+          document.getElementById("is-bests").textContent = "Bests";
+        }
       }
 
       function decrement() {
@@ -209,6 +228,10 @@
       start(val);
 
       function start(val) {
+        // now val will act like index of BESTS array
+        if (isBests) {
+          val = BESTS[val];
+        }
         var canvasStr =
           '<canvas id="myCanvas" width="2000" height="2000" style="border:1px solid #888; background-color:' +
           backgroundColor +
@@ -243,6 +266,10 @@
         }, 10);
         var ss = 2.0;
 
+        var hue = 0;
+
+        flip = false;
+
         function Draw() {
           ss -= Round(step * (r / smr));
           dxSmall = Round(smr * Math.cos(ss * Math.PI));
@@ -257,9 +284,35 @@
             ctx.beginPath();
             ctx.moveTo(pointX, pointY);
             ctx.lineTo(pointXsaved, pointYsaved);
-            ctx.strokeStyle = lineColor;
+
+            // const hue = Math.floor(Math.random() * 360);
+            var color = "hsl(" + hue + ", 100%, 55%)";
+            // ctx.strokeStyle = lineColor;
+            ctx.strokeStyle = color;
             ctx.lineWidth = 4.5;
             ctx.stroke();
+
+            hue += 0.1;
+
+            // hue += 0.2;
+            // if (hue < 30) {
+            //   hue += 0.1;
+            // } else if (hue >) {
+            //   hue -= 0.1;
+            // }
+            // if (flip) {
+            //   if (hue < 30) {
+            //     hue += 0.08;
+            //   } else {
+            //     flip = false;
+            //   }
+            // } else {
+            //   if (hue > 0) {
+            //     hue -= 0.08;
+            //   } else {
+            //     flip = true;
+            //   }
+            // }
           }
           pointXsaved = pointX;
           pointYsaved = pointY;
