@@ -80,7 +80,7 @@
       }
 
       canvas {
-        width: 530px;
+        width: 700px;
         background-color: #000;
       }
 
@@ -118,39 +118,47 @@
           margin-left: 0px;
         }
       }
+
+      /* when desktop view */
+      @media screen and (min-width: 601px) {
+        body {
+          flex-direction: row;
+          display: flex;
+        }
+      }
     </style>
   </head>
 
   <body>
     <div id="container"></div>
 
-    <button onclick="decrement()" id="decre">PREV</button>
-    <input
-      id="value"
-      value="62"
-      type="number"
-      onkeyup="changeByKeyUp(this.value)"
-    />
-    <button onclick="increment()" id="incre">NEXT</button>
-    <button onclick="Clear()" id="stop">STOP</button>
-    <button onclick="reStart()" id="restart">RESTART</button>
-    <button onclick="toggleBackgroundColor()">BackGround</button>
-    <button onclick="toggleIsBests()" id="is-bests">Serial</button>
-    <input
-      type="color"
-      id="lineColor"
-      value="green"
-      onchange="lineColor = this.value"
-    />
-    <button onclick="keep()">Keep</button>
-    <button onclick="back()">Back</button>
-    <br />
-    <!-- <a href="#" id="link" onclick="downloadImage()">download-image</a> -->
+    <div>
+      <button onclick="decrement()" id="decre">PREV</button>
+      <input
+        id="value"
+        value="62"
+        type="number"
+        onkeyup="changeByKeyUp(this.value)"
+      />
+      <button onclick="increment()" id="incre">NEXT</button>
+      <button onclick="Clear()" id="stop">STOP</button>
+      <button onclick="reStart()" id="restart">RESTART</button>
+      <button onclick="toggleBackgroundColor()">BackGround</button>
+      <button onclick="toggleIsBests()" id="is-bests">Serial</button>
+      <input
+        type="color"
+        id="lineColor"
+        value="green"
+        onchange="lineColor = this.value"
+      />
+      <button onclick="keep()">Keep</button>
+      <button onclick="back()">Back</button>
+      <br />
+      <!-- <a href="#" id="link" onclick="downloadImage()">download-image</a> -->
+      <button onclick="toggleColorMode()">ColorMode</button>
 
-    <button onclick="toggleColorMode()">ColorMode</button>
-
-    <p id="keeper" style="color: grey"></p>
-
+      <p id="keeper" style="color: grey"></p>
+    </div>
     <script>
       // var BESTS = [
       //   5, 7.1, 15, 20, 28, 34, 37, 42, 54, 59, 60, 63, 69, 79, 98, 99, 110,
@@ -667,18 +675,25 @@
           console.log("best val", BESTS[val]);
           val = BESTS[val].num;
         }
+        const newScale = 2;
+        const WW = 2000 * newScale;
+        const HH = 2000 * newScale;
         var canvasStr =
-          '<canvas id="myCanvas" width="2000" height="2000" style="border:1px solid #888; background-color:' +
+          '<canvas id="myCanvas" width="' +
+          WW +
+          '" height="' +
+          HH +
+          '" style="border:1px solid #888; background-color:' +
           backgroundColor +
           ';" >Your browser does not support the canvas element. </canvas>';
         var container = document.getElementById("container");
         container.innerHTML = canvasStr;
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
-        var x = 1000,
-          y = 1000,
-          r = 530,
-          smr = 146; //small radius
+        var x = WW / 2,
+          y = HH / 2,
+          r = 530 * newScale,
+          smr = 146 * newScale; //small radius
         var check = 2.0;
         var cc = check,
           step = Math.sqrt(val),
@@ -725,30 +740,10 @@
             // ctx.strokeStyle = lineColor;
             // ctx.strokeStyle = color;
             ctx.strokeStyle = colorMode === "GRADIENT" ? color : lineColor;
-            ctx.lineWidth = 4.5;
+            ctx.lineWidth = 4.5 * newScale;
             ctx.stroke();
 
             hue += 0.1;
-
-            // hue += 0.2;
-            // if (hue < 30) {
-            //   hue += 0.1;
-            // } else if (hue >) {
-            //   hue -= 0.1;
-            // }
-            // if (flip) {
-            //   if (hue < 30) {
-            //     hue += 0.08;
-            //   } else {
-            //     flip = false;
-            //   }
-            // } else {
-            //   if (hue > 0) {
-            //     hue -= 0.08;
-            //   } else {
-            //     flip = true;
-            //   }
-            // }
           }
           pointXsaved = pointX;
           pointYsaved = pointY;
