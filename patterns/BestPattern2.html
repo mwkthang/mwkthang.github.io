@@ -127,14 +127,14 @@
     <button onclick="decrement()" id="decre">PREV</button>
     <input
       id="value"
-      value="0"
+      value="62"
       type="number"
       onkeyup="changeByKeyUp(this.value)"
     />
     <button onclick="increment()" id="incre">NEXT</button>
     <button onclick="Clear()" id="stop">STOP</button>
     <button onclick="reStart()" id="restart">RESTART</button>
-    <button onclick="toggleBackgroundColor()">Toggle Background Color</button>
+    <button onclick="toggleBackgroundColor()">BackGround</button>
     <button onclick="toggleIsBests()" id="is-bests">Serial</button>
     <input
       type="color"
@@ -145,26 +145,448 @@
     <button onclick="keep()">Keep</button>
     <button onclick="back()">Back</button>
     <br />
-    <a href="#" id="link" onclick="downloadImage()">download-image</a>
+    <!-- <a href="#" id="link" onclick="downloadImage()">download-image</a> -->
+
+    <button onclick="toggleColorMode()">ColorMode</button>
 
     <p id="keeper" style="color: grey"></p>
 
     <script>
+      // var BESTS = [
+      //   5, 7.1, 15, 20, 28, 34, 37, 42, 54, 59, 60, 63, 69, 79, 98, 99, 110,
+      //   112, 117, 118, 119, 136, 147, 149, 193, 197, 238, 240, 243, 252, 253,
+      //   254, 255, 306, 314, 319, 330, 788, 867, 916, 923, 960, 972, 1008, 1019,
+      //   1020, 1021, 1022, 1023, 1111, 1224, 1235, 1445, 1446, 1447, 1478, 1482,
+      //   1590, 1600.009, 1681.009, 1792, 1809, 40002,
+      // ];
+
+      // var BESTS = [
+      //   {
+      //     num: 5,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 7.1,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 15,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 20,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 28,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 34,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 37,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 42,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 54,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 59,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 60,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 63,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 69,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 79,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 98,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 99,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 110,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 112,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 117,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 118,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 119,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 136,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 147,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 149,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 193,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 197,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 238,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 240,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 243,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 252,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 253,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 254,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 255,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 306,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 314,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 319,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 330,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 788,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 867,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 916,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 923,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 960,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 972,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1008,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1019,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1020,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1021,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1022,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1023,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1111,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1224,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1235,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1445,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1446,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1447,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1478,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1482,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1590,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1600.009,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1681.009,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1792,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 1809,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      //   {
+      //     num: 40002,
+      //     colorMode: "GRADIENT",
+      //     times: 20000,
+      //   },
+      // ];
+
       var BESTS = [
-        5, 7.1, 15, 20, 28, 34, 37, 42, 54, 59, 60, 63, 69, 79, 98, 99, 110,
-        112, 117, 118, 119, 136, 147, 149, 193, 197, 238, 240, 243, 252, 253,
-        254, 255, 306, 314, 319, 330, 788, 867, 916, 923, 960, 972, 1008, 1019,
-        1020, 1021, 1022, 1023, 1111, 1224, 1235, 1445, 1446, 1447, 1478, 1482,
-        1590, 1600.009, 1681.009, 1792, 1809,
+        {
+          num: 960,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 1111,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 255,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 243,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 1809,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 1792,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 1590,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 40002,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 39995,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 1235,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 1445,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 1224,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 1022,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 1021,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 867,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 319,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 240,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        //238
+        {
+          num: 238,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 112,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
+        {
+          num: 34,
+          colorMode: "GRADIENT",
+          times: 20000,
+        },
       ];
       console.log("BestLen", BESTS.length);
       var lineColor = "green";
       var number = document.getElementById("value");
       val = parseFloat(number.value);
 
-      // var number = document.getElementById("value");
-      // val = parseFloat(number.value);
-      var isDarkMode = true; // Variable to track if dark mode is enabled
+      var isDarkMode = true;
 
       let backgroundColor = "#000"; // Default background color
       function toggleBackgroundColor() {
@@ -192,6 +614,15 @@
         }
       }
 
+      var colorMode = "GRADIENT"; // "GRADIENT" or "NORMAL"
+      function toggleColorMode() {
+        if (colorMode === "GRADIENT") {
+          colorMode = "NORMAL";
+        } else {
+          colorMode = "GRADIENT";
+        }
+      }
+
       function decrement() {
         val = val - 1;
         number.value = val;
@@ -208,7 +639,7 @@
 
       function keep() {
         var keeper = document.getElementById("keeper");
-        keeper.innerHTML += val + ", ";
+        keeper.innerHTML += (isBests ? BESTS[val].num : val) + ", ";
       }
 
       function back() {
@@ -233,7 +664,8 @@
       function start(val) {
         // now val will act like index of BESTS array
         if (isBests) {
-          val = BESTS[val];
+          console.log("best val", BESTS[val]);
+          val = BESTS[val].num;
         }
         var canvasStr =
           '<canvas id="myCanvas" width="2000" height="2000" style="border:1px solid #888; background-color:' +
@@ -266,7 +698,7 @@
             console.log(count);
             increment();
           }
-        }, 10);
+        }, 1);
         var ss = 2.0;
 
         var hue = 0;
@@ -291,7 +723,8 @@
             // const hue = Math.floor(Math.random() * 360);
             var color = "hsl(" + hue + ", 100%, 55%)";
             // ctx.strokeStyle = lineColor;
-            ctx.strokeStyle = color;
+            // ctx.strokeStyle = color;
+            ctx.strokeStyle = colorMode === "GRADIENT" ? color : lineColor;
             ctx.lineWidth = 4.5;
             ctx.stroke();
 
