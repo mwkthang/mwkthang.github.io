@@ -80,7 +80,7 @@
       }
 
       canvas {
-        width: 700px;
+        width: 750px;
         background-color: #000;
       }
 
@@ -136,7 +136,7 @@
       <button onclick="decrement()" id="decre">PREV</button>
       <input
         id="value"
-        value="62"
+        value="0"
         type="number"
         onkeyup="changeByKeyUp(this.value)"
       />
@@ -158,6 +158,8 @@
       <button onclick="toggleColorMode()">ColorMode</button>
 
       <p id="keeper" style="color: grey"></p>
+      <pre style="color: red" id="timeTaken">Time Taken:</pre>
+      <pre style="color: red" id="numberOfMoves">Number of moves:</pre>
     </div>
     <script>
       // var BESTS = [
@@ -488,106 +490,105 @@
 
       var BESTS = [
         {
-          num: 960,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
           num: 1111,
           colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 255,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 243,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 1809,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 1792,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 1590,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 40002,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 39995,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 1235,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 1445,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 1224,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 1022,
-          colorMode: "GRADIENT",
-          times: 20000,
-        },
-        {
-          num: 1021,
-          colorMode: "GRADIENT",
-          times: 20000,
+          maxMoves: 11138,
         },
         {
           num: 867,
           colorMode: "GRADIENT",
-          times: 20000,
+          // maxMoves: 7444,
+          maxMoves: 14702,
         },
         {
-          num: 319,
+          num: 255,
           colorMode: "GRADIENT",
-          times: 20000,
+          maxMoves: 7500,
         },
         {
-          num: 240,
+          num: 243,
           colorMode: "GRADIENT",
-          times: 20000,
-        },
-        //238
-        {
-          num: 238,
-          colorMode: "GRADIENT",
-          times: 20000,
+          maxMoves: 4542,
         },
         {
-          num: 112,
+          num: 1809,
           colorMode: "GRADIENT",
-          times: 20000,
+          maxMoves: 6749,
         },
         {
-          num: 34,
+          num: 1792,
           colorMode: "GRADIENT",
-          times: 20000,
+          maxMoves: 844,
         },
+        {
+          num: 1590,
+          colorMode: "GRADIENT",
+          maxMoves: 6272,
+        },
+        {
+          num: 1621.1,
+          colorMode: "GRADIENT",
+          maxMoves: 1169,
+        },
+        {
+          num: 40002,
+          colorMode: "GRADIENT",
+          maxMoves: 3634,
+        },
+        {
+          num: 39995,
+          colorMode: "GRADIENT",
+          maxMoves: 9600,
+        },
+        // {
+        //   num: 1235,
+        //   colorMode: "GRADIENT",
+        //   maxMoves: 3783,
+        // },
+        // {
+        //   num: 1445,
+        //   colorMode: "GRADIENT",
+        // },
+        {
+          num: 1224,
+          colorMode: "GRADIENT",
+          maxMoves: 2672,
+        },
+        {
+          num: 1021,
+          colorMode: "GRADIENT",
+          maxMoves: 6445,
+        },
+        {
+          num: 1022,
+          colorMode: "GRADIENT",
+          maxMoves: 6490,
+        },
+        {
+          num: 960,
+          colorMode: "GRADIENT",
+          maxMoves: 3831,
+        },
+        // {
+        //   num: 319,
+        //   colorMode: "GRADIENT",
+        // },
+        // {
+        //   num: 240,
+        //   colorMode: "GRADIENT",
+        // },
+        // {
+        //   num: 238,
+        //   colorMode: "GRADIENT",
+        // },
+        // {
+        //   num: 112,
+        //   colorMode: "GRADIENT",
+        // },
+        // {
+        //   num: 34,
+        //   colorMode: "GRADIENT",
+        // },
       ];
       console.log("BestLen", BESTS.length);
       var lineColor = "green";
@@ -669,10 +670,15 @@
       }
       start(val);
 
+      let defaultMoves = {
+        maxMoves: 5000 * 8,
+      };
       function start(val) {
         // now val will act like index of BESTS array
         if (isBests) {
-          console.log("best val", BESTS[val]);
+          let maxM = BESTS?.[val]?.maxMoves;
+          defaultMoves.maxMoves = maxM;
+          console.log("best val", BESTS[val], defaultMoves.maxMoves);
           val = BESTS[val].num;
         }
         const newScale = 2;
@@ -699,6 +705,7 @@
           step = Math.sqrt(val),
           len = Math.sqrt(6);
         var count = 0;
+        var timeTaken = Date.now();
         timeInt = setInterval(function () {
           Radian = Round(cc * Math.PI);
           dx = Round(r * Math.cos(Radian)); //distance x
@@ -708,11 +715,22 @@
           Draw();
           cc += step;
           count++;
-          if (count > 5000) {
+          // if (count > 5000 * 8) {
+          // console.log(
+          //   "todo; cheking:",
+          //   isBests ? defaultMoves.maxMoves : 5000 * 8
+          // );
+          // if (count > (isBests ? BESTS?.[val]?.maxMoves : 5000 * 8)) {
+          if (count > defaultMoves.maxMoves) {
             clearInterval(timeInt);
             console.log(count);
             increment();
           }
+          const timeTakenNow = Date.now();
+          document.getElementById("timeTaken").textContent =
+            "Time Taken: " + msToHHMMSSSSS(timeTakenNow - timeTaken);
+          document.getElementById("numberOfMoves").textContent =
+            "Number of moves: " + count;
         }, 1);
         var ss = 2.0;
 
@@ -773,6 +791,32 @@
 
       function Clear() {
         clearInterval(timeInt);
+      }
+
+      function msToHHMMSSSSS(milliseconds) {
+        // Calculate hours, minutes, seconds, and milliseconds
+        var seconds = Math.floor(milliseconds / 1000);
+        var hours = Math.floor(seconds / 3600);
+        seconds %= 3600;
+        var minutes = Math.floor(seconds / 60);
+        seconds %= 60;
+        var milliseconds = milliseconds % 1000;
+
+        // Format into HH:mm:ss.SSS
+        var formattedTime = `${pad(hours, 2)}:${pad(minutes, 2)}:${pad(
+          seconds,
+          2
+        )}.${pad(milliseconds, 3)}`;
+        return formattedTime;
+      }
+
+      // Function to pad numbers with leading zeros
+      function pad(number, length) {
+        var str = String(number);
+        while (str.length < length) {
+          str = "0" + str;
+        }
+        return str;
       }
     </script>
   </body>
