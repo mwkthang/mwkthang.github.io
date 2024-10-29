@@ -8334,7 +8334,7 @@
                   //     t <= 75 && t >= 1 ? t : 3);
                   const sides = window.location.href.split("#id=")[1];
                   console.log("url===>", window.location.href, o);
-                  return sides ? sides : 3;
+                  return sides ? sides : 6;
                 },
               },
               {
