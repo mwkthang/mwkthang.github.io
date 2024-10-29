@@ -2168,7 +2168,7 @@
               Object(o.jsxs)(
                 j.a.Item,
                 {
-                  href: "/rubiks-cube-solver/#id=".concat(s),
+                  href: "/rubiks-cube/#id=".concat(s),
                   onClick: n,
                   children: [s, " X ", s],
                 },
@@ -8327,11 +8327,14 @@
                   var t,
                     n = window.location.href.split("/"),
                     o = n[n.length - 1].slice(0, 4);
-                  return e
-                    ? "localhost" === n[2].substr(0, 9)
-                    : ("#id=" === o &&
-                        (t = parseInt(n[n.length - 1].substr(4))),
-                      t <= 75 && t >= 1 ? t : 3);
+                  // return e
+                  //   ? "localhost" === n[2].substr(0, 9)
+                  //   : ("#id=" === o &&
+                  //       (t = parseInt(n[n.length - 1].substr(4))),
+                  //     t <= 75 && t >= 1 ? t : 3);
+                  const sides = window.location.href.split("#id=")[1];
+                  console.log("url===>", window.location.href, o);
+                  return sides ? sides : 3;
                 },
               },
               {
