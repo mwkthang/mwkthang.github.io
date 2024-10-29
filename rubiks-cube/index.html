@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://rubikverse.com/rubiks-cube-solver/#id=6 -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Online NxN Rubik's Cube Solver and Simulator</title>
+    <link
+      rel="shortcut icon"
+      href="https://rubikverse.com/rubiks-cube-solver/RubiksProgram/icon.png"
+    />
+    <link
+      rel="icon"
+      sizes="16x16 32x32 64x64"
+      href="https://rubikverse.com/rubiks-cube-solver/RubiksProgram/icon.png"
+    />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="./Online NxN Rubik&#39;s Cube Solver and Simulator(2)_files/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      async=""
+      type="text/javascript"
+      src="https://cmp.quantcast.comchoice/index.htmlxncav4ssEzwLpindex.htmlrubikverse.comchoicefdfe.html?tag_version=V2"
+    ></script>
+    <script src="./Online NxN Rubik&#39;s Cube Solver and Simulator(2)_files/jquery.js"></script>
+    <link
+      href="./Online NxN Rubik&#39;s Cube Solver and Simulator(2)_files/SolveTheCubes.css"
+      rel="stylesheet"
+    />
+    <link
+      href="./Online NxN Rubik&#39;s Cube Solver and Simulator(2)_files/main.SolveTheCubes.css"
+      rel="stylesheet"
+    />
+    <script async="true">
+      !(function () {
+        var t = window.location.hostname,
+          e = document.createElement("script"),
+          a = document.getElementsByTagName("script")[0],
+          t = "https://cmp.quantcast.com".concat(
+            "choice/index.html",
+            "xncav4ssEzwLp",
+            "index.html",
+            t,
+            "choicefdfe.html?tag_version=V2"
+          ),
+          n = 0;
+        (e.async = !0),
+          (e.type = "text/javascript"),
+          (e.src = t),
+          a.parentNode.insertBefore(e, a),
+          (function () {
+            for (var t, o = "__tcfapiLocator", a = [], i = window; i; ) {
+              try {
+                if (i.frames[o]) {
+                  t = i;
+                  break;
+                }
+              } catch (t) {}
+              if (i === window.top) break;
+              i = i.parent;
+            }
+            t ||
+              (!(function t() {
+                var e,
+                  a = i.document,
+                  n = !!i.frames[o];
+                return (
+                  n ||
+                    (a.body
+                      ? (((e = a.createElement("iframe")).style.cssText =
+                          "display:none"),
+                        (e.name = o),
+                        a.body.appendChild(e))
+                      : setTimeout(t, 5)),
+                  !n
+                );
+              })(),
+              (i.__tcfapi = function () {
+                var t,
+                  e = arguments;
+                if (!e.length) return a;
+                "setGdprApplies" === e[0]
+                  ? 3 < e.length &&
+                    2 === e[2] &&
+                    "boolean" == typeof e[3] &&
+                    ((t = e[3]), "function" == typeof e[2] && e[2]("set", !0))
+                  : "ping" === e[0]
+                  ? ((t = { gdprApplies: t, cmpLoaded: !1, cmpStatus: "stub" }),
+                    "function" == typeof e[2] && e[2](t))
+                  : ("init" === e[0] &&
+                      "object" == typeof e[3] &&
+                      (e[3] = Object.assign(e[3], { tag_version: "V2" })),
+                    a.push(e));
+              }),
+              i.addEventListener(
+                "message",
+                function (a) {
+                  var n = "string" == typeof a.data,
+                    t = {};
+                  try {
+                    t = n ? JSON.parse(a.data) : a.data;
+                  } catch (t) {}
+                  var o = t.__tcfapiCall;
+                  o &&
+                    window.__tcfapi(
+                      o.command,
+                      o.version,
+                      function (t, e) {
+                        e = {
+                          __tcfapiReturn: {
+                            returnValue: t,
+                            success: e,
+                            callId: o.callId,
+                          },
+                        };
+                        n && (e = JSON.stringify(e)),
+                          a &&
+                            a.source &&
+                            a.source.postMessage &&
+                            a.source.postMessage(e, "*");
+                      },
+                      o.parameter
+                    );
+                },
+                !1
+              ));
+          })();
+        var o,
+          i = function () {
+            var t = arguments;
+            typeof window.__uspapi !== i &&
+              setTimeout(function () {
+                void 0 !== window.__uspapi &&
+                  window.__uspapi.apply(window.__uspapi, t);
+              }, 500);
+          };
+        void 0 === window.__uspapi &&
+          ((window.__uspapi = i),
+          (o = setInterval(function () {
+            n++,
+              window.__uspapi === i && n < 3
+                ? console.warn("USP is not accessible")
+                : clearInterval(o);
+          }, 6e3)));
+      })();
+    </script>
+  </head>
+
+  <body cz-shortcut-listen="true">
+    <style>
+      #stpd_close svg {
+        background-color: rgba(255, 255, 255, 0.5) !important;
+      }
+
+      body {
+        background-color: #000;
+        overflow: hidden;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .nav-fix-for-edge {
+        display: flex;
+      }
+
+      .qc-cmp2-persistent-link {
+        padding: 2px 5px;
+        text-decoration: none;
+        background: #000;
+        color: #fff !important;
+        font-weight: 400 !important;
+        opacity: 0.5;
+        left: 0;
+        font-size: 13px;
+        right: auto;
+      }
+
+      .qc-cmp2-persistent-link:hover {
+        opacity: 0.9;
+      }
+
+      button:focus {
+        outline: 0;
+      }
+
+      noscript {
+        color: #fff;
+        line-height: 2em;
+        text-align: center;
+        display: block;
+      }
+
+      .redoUndo {
+        -webkit-background-size: 90% 90%;
+        -moz-background-size: 90% 90%;
+        -o-background-size: 90% 90%;
+        background-size: 90% 90%;
+      }
+
+      .popup-content {
+        border: none !important;
+        background: 0 0 !important;
+        box-shadow: none !important;
+      }
+
+      .popup-arrow {
+        display: none !important;
+      }
+
+      .popupDiv {
+        position: fixed;
+        top: 5%;
+        left: 50%;
+        max-width: 85%;
+        margin-left: -37.5%;
+        border-radius: 0.25rem;
+        border: 2px solid #5f8aa9;
+        background: #3d596d;
+        color: #fff;
+      }
+
+      .popupDiv p {
+        text-align: left;
+        padding-right: 5px;
+        padding-left: 5px;
+      }
+
+      .shadeBackground {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ddd;
+        opacity: 0.5;
+      }
+
+      .canvas canvas {
+        background: center center url(canvasbg.png) no-repeat transparent;
+      }
+
+      body {
+        background-image: url(canvasbg.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        min-height: 350px;
+        overflow: auto;
+      }
+      div.footerNavi {
+        /* position: fixed;
+            bottom: 0;
+            margin: 0;
+            right: 0;
+            left: 0; */
+        display: block;
+        background: rgba(100, 100, 100, 1);
+        text-align: left;
+        padding: 5px;
+      }
+      div.footerNavi p {
+        color: #fff;
+        margin: 0;
+      }
+      @media (max-width: 640px) {
+        #fullscreenBtn,
+        .settingsDropDown {
+          display: none;
+        }
+      }
+
+      @media (max-width: 399px) {
+        #fullscreenBtn {
+          display: none;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .popupDiv {
+          width: 90% !important;
+        }
+
+        #infoBtn {
+          padding-left: 10px !important;
+          padding-right: 10px !important;
+        }
+
+        #divInfo {
+          display: none;
+        }
+
+        #settings {
+          display: none;
+        }
+      }
+
+      #fullscreenBtn,
+      #infoBtn,
+      #triggerBtn {
+        font-size: 1rem;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .canvas {
+        overflow: hidden;
+      }
+
+      #moveInput {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        min-width: max-content;
+      }</style
+    ><noscript>Please enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div>
+        <div class="App" style="width: max-content">
+          <nav class="navbar navbar-dark fixed-top">
+            <ul class="nav nav-justified mr-auto">
+              <li class="nav-item nav-fix-for-edge">
+                <p class="navbar-brand">
+                  <a href="https://rubikverse.com/">Rubikverse</a>
+                </p>
+                <div class="settingsDropDown">
+                  <div aria-label="settings" class="settings dropdown">
+                    <button
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      id="settings"
+                      type="button"
+                      class="dropdown-toggle btn btn-primary"
+                    >
+                      <i class="settingIcon">Settings</i>
+                    </button>
+                  </div>
+                </div>
+                <div class="cubesDropdown">
+                  <div class="cubes dropdown">
+                    <button
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      type="button"
+                      class="dropdown-toggle btn btn-primary"
+                    >
+                      Cubes Option
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div style="float: right; height: 100%">
+              <button id="fullscreenBtn" value="true">FullScreen</button>
+            </div>
+          </nav>
+          <p
+            style="
+              position: fixed;
+              top: 110px;
+              left: 10px;
+              color: lightgrey;
+              font-size: 1rem;
+            "
+          >
+            Speed: Medium
+          </p>
+          <div style="width: 100%; position: absolute; top: 85px; margin: auto">
+            <div style="width: 116px; margin: auto">
+              <button
+                class="redoUndo"
+                style="
+                  margin-right: 8px;
+                  float: left;
+                  width: 40px;
+                  height: 40px;
+                  font-size: 1rem;
+                  background-image: url('https://cube-solver.com/buttonundo.svg');
+                  background-repeat: no-repeat;
+                "
+              ></button
+              ><button
+                class="redoUndo"
+                style="
+                  margin-left: 8px;
+                  float: right;
+                  width: 40px;
+                  height: 40px;
+                  font-size: 1rem;
+                  background-image: url('https://cube-solver.com/buttonredo.svg');
+                  background-repeat: no-repeat;
+                "
+              ></button>
+            </div>
+          </div>
+          <div class="sliderDiv">
+            <div class="rc-slider">
+              <div class="rc-slider-rail"></div>
+              <div
+                class="rc-slider-track"
+                style="left: 0%; right: auto; width: 57.1429%"
+              ></div>
+              <div class="rc-slider-step"></div>
+              <div
+                tabindex="0"
+                class="rc-slider-handle"
+                role="slider"
+                aria-valuemin="0"
+                aria-valuemax="70"
+                aria-valuenow="40"
+                aria-disabled="false"
+                style="left: 57.1429%; right: auto; transform: translateX(-50%)"
+              ></div>
+              <div class="rc-slider-mark"></div>
+            </div>
+          </div>
+          <div class="sideMenuWrapper" style="pointer-events: none">
+            <div class="sideMenuBox0 sideLimit">
+              <div class="mainSideMenuButton" style="height: 16.6667%">
+                <button class="sideMenuButton">Color Picker</button>
+              </div>
+              <div class="mainSideMenuButton" style="height: 16.6667%">
+                <button class="sideMenuButton">Solver</button>
+              </div>
+              <div class="mainSideMenuButton" style="height: 16.6667%">
+                <button class="sideMenuButton">Patterns</button>
+              </div>
+              <div class="mainSideMenuButton" style="height: 16.6667%">
+                <button class="sideMenuButton">Scramble</button>
+              </div>
+              <div class="mainSideMenuButton" style="height: 16.6667%">
+                <button class="sideMenuButton">Reset</button>
+              </div>
+            </div>
+          </div>
+          <div class="bottomMenuWrapper" style="pointer-events: none">
+            <div
+              id="controlsPopup"
+              class="warningPopup"
+              style="position: absolute; left: 35vw; width: 30vw; bottom: 8px"
+            >
+              <div id="cpChangeData" data=""></div>
+              <div class="cpMessage">
+                Are you sure you want to leave Color Picker? Progress will not
+                be saved.
+              </div>
+              <button class="cpLeaveStay">Stay</button
+              ><button class="cpLeaveStay">Leave</button>
+            </div>
+            <div
+              id="controlsPopup"
+              class="warningPopupSolver"
+              style="position: absolute; left: 35vw; width: 30vw; bottom: 8px"
+            >
+              <div id="solverChangeData" data=""></div>
+              <div class="solverMessage">
+                Are you sure you want to leave Solver? Progress will not be
+                saved.
+              </div>
+              <button class="solverLeaveStay">Stay</button
+              ><button class="solverLeaveStay">Leave</button>
+            </div>
+            <div class="bottomExitDiv"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./Online NxN Rubik&#39;s Cube Solver and Simulator(2)_files/bootstrap.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        let e = !1,
+          n = document.body;
+        function t() {
+          document.fullscreenElement ||
+            document.webkitIsFullScreen ||
+            document.mozFullScreen ||
+            document.msFullscreenElement ||
+            ($("#fullscreenBtn").text("Fullscreen"), (e = !1));
+        }
+        $("#fullscreenBtn").on("click", (t) => {
+          let l =
+              n.requestFullScreen ||
+              n.webkitRequestFullScreen ||
+              n.mozRequestFullScreen ||
+              n.msRequestFullScreen,
+            c =
+              document.exitFullScreen ||
+              document.webkitExitFullscreen ||
+              document.mozCancelFullScreen ||
+              document.msExitFullscreen;
+          t.target.value;
+          if (l)
+            e
+              ? ((t.target.textContent = "Fullscreen"), c.call(document))
+              : ((t.target.textContent = "Exit"), l.call(n)),
+              (e = !e);
+          else if (void 0 !== window.ActiveXObject) {
+            let e = new ActiveXObject("WScript.Shell");
+            null !== e && e.SendKeys("{F11}");
+          }
+        }),
+          document.addEventListener(
+            "mousedown",
+            function (e) {
+              e.detail > 1 && e.preventDefault();
+            },
+            !1
+          ),
+          document.addEventListener("fullscreenchange", t),
+          document.addEventListener("webkitfullscreenchange", t),
+          document.addEventListener("mozfullscreenchange", t),
+          document.addEventListener("MSFullscreenChange", t);
+      });
+    </script>
+
+    <div
+      class="canvas"
+      style="
+        background-size: cover;
+        background-image: url(canvasbg.png);
+        background-position: center center;
+        background: radial-gradient(#999, #333);
+      "
+    >
+      <canvas
+        class="canvas"
+        width="1440"
+        height="700"
+        style="width: 1440px; height: 700px"
+      ></canvas>
+    </div>
+    <div class="footerNavi">
+      <div class="footerNavi"></div>
+    </div>
+
+    <script>
+      !(function (r) {
+        function e(e) {
+          for (
+            var n, i, a = e[0], l = e[1], p = e[2], c = 0, s = [];
+            c < a.length;
+            c++
+          )
+            (i = a[c]),
+              Object.prototype.hasOwnProperty.call(o, i) &&
+                o[i] &&
+                s.push(o[i][0]),
+              (o[i] = 0);
+          for (n in l)
+            Object.prototype.hasOwnProperty.call(l, n) && (r[n] = l[n]);
+          for (f && f(e); s.length; ) s.shift()();
+          return u.push.apply(u, p || []), t();
+        }
+        function t() {
+          for (var r, e = 0; e < u.length; e++) {
+            for (var t = u[e], n = !0, a = 1; a < t.length; a++) {
+              var l = t[a];
+              0 !== o[l] && (n = !1);
+            }
+            n && (u.splice(e--, 1), (r = i((i.s = t[0]))));
+          }
+          return r;
+        }
+        var n = {},
+          o = { 1: 0 },
+          u = [];
+        function i(e) {
+          if (n[e]) return n[e].exports;
+          var t = (n[e] = { i: e, l: !1, exports: {} });
+          return r[e].call(t.exports, t, t.exports, i), (t.l = !0), t.exports;
+        }
+        (i.m = r),
+          (i.c = n),
+          (i.d = function (r, e, t) {
+            i.o(r, e) ||
+              Object.defineProperty(r, e, { enumerable: !0, get: t });
+          }),
+          (i.r = function (r) {
+            "undefined" != typeof Symbol &&
+              Symbol.toStringTag &&
+              Object.defineProperty(r, Symbol.toStringTag, { value: "Module" }),
+              Object.defineProperty(r, "__esModule", { value: !0 });
+          }),
+          (i.t = function (r, e) {
+            if ((1 & e && (r = i(r)), 8 & e)) return r;
+            if (4 & e && "object" == typeof r && r && r.__esModule) return r;
+            var t = Object.create(null);
+            if (
+              (i.r(t),
+              Object.defineProperty(t, "default", { enumerable: !0, value: r }),
+              2 & e && "string" != typeof r)
+            )
+              for (var n in r)
+                i.d(
+                  t,
+                  n,
+                  function (e) {
+                    return r[e];
+                  }.bind(null, n)
+                );
+            return t;
+          }),
+          (i.n = function (r) {
+            var e =
+              r && r.__esModule
+                ? function () {
+                    return r.default;
+                  }
+                : function () {
+                    return r;
+                  };
+            return i.d(e, "a", e), e;
+          }),
+          (i.o = function (r, e) {
+            return Object.prototype.hasOwnProperty.call(r, e);
+          }),
+          (i.p = "RubiksProgram/index.html");
+        var a = (this.webpackJsonprubiksprogram =
+            this.webpackJsonprubiksprogram || []),
+          l = a.push.bind(a);
+        (a.push = e), (a = a.slice());
+        for (var p = 0; p < a.length; p++) e(a[p]);
+        var f = l;
+        t();
+      })([]);
+    </script>
+    <script src="./Online NxN Rubik&#39;s Cube Solver and Simulator(2)_files/SolveTheCubes.js"></script>
+    <script src="./Online NxN Rubik&#39;s Cube Solver and Simulator(2)_files/main.SolveTheCubes.js"></script>
+
+    <iframe
+      name="__tcfapiLocator"
+      style="display: none"
+      src="./Online NxN Rubik&#39;s Cube Solver and Simulator(2)_files/saved_resource.html"
+    ></iframe>
+  </body>
+  <!-- Mirrored from cube-solver.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 21 Apr 2024 09:59:00 GMT -->
+</html>
