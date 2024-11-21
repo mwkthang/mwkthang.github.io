@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unitary Method Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+      }
+      label {
+        font-weight: bold;
+      }
+      .input-group {
+        margin-bottom: 15px;
+      }
+      .output {
+        margin-top: 20px;
+        font-size: 1.2em;
+        color: #333;
+      }
+      button {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Unitary Method Calculator</h1>
+
+    <div class="input-group">
+      <label for="quantity">Quantity (e.g., 5 kg, 10 items):</label><br />
+      <input type="number" id="quantity" placeholder="Enter quantity" />
+    </div>
+
+    <div class="input-group">
+      <label for="price">Total Price (e.g., $50):</label><br />
+      <input type="number" id="price" placeholder="Enter total price" />
+    </div>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="output" id="result"></div>
+
+    <script>
+      function calculate() {
+        // Get user inputs
+        const quantity = parseFloat(document.getElementById("quantity").value);
+        const price = parseFloat(document.getElementById("price").value);
+        const result = document.getElementById("result");
+
+        // Clear previous result
+        result.textContent = "";
+
+        if (quantity > 0 && price > 0) {
+          // Calculate price per unit
+          const pricePerUnit = price / quantity;
+          result.textContent = `Price per unit is $${pricePerUnit.toFixed(2)}.`;
+        } else if (quantity > 0) {
+          result.textContent =
+            "Please enter the total price to calculate the price per unit.";
+        } else if (price > 0) {
+          result.textContent =
+            "Please enter the quantity to calculate the price per unit.";
+        } else {
+          result.textContent = "Please enter valid inputs.";
+        }
+      }
+    </script>
+  </body>
+</html>
