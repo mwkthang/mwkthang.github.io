@@ -35,45 +35,77 @@
   </head>
   <body>
     <h1>Unitary Method Calculator</h1>
+    <table>
+      <tr>
+        <td>
+          <label>Quantity:</label>
+        </td>
+        <td>
+          <label>Price:</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="number" id="quantity" />
+        </td>
+        <td>
+          <input type="number" id="price" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          Unit Price:
+          <span id="unit_price"></span>
+        </td>
+      </tr>
 
-    <div class="input-group">
-      <label for="quantity">Quantity (e.g., 5 kg, 10 items):</label><br />
-      <input type="number" id="quantity" placeholder="Enter quantity" />
-    </div>
-
-    <div class="input-group">
-      <label for="price">Total Price (e.g., $50):</label><br />
-      <input type="number" id="price" placeholder="Enter total price" />
-    </div>
-
-    <button onclick="calculate()">Calculate</button>
-
-    <div class="output" id="result"></div>
+      <tr>
+        <td>
+          <input type="number" id="newQuantity" />
+        </td>
+        <td>
+          <div id="newPrice"></div>
+        </td>
+      </tr>
+    </table>
 
     <script>
+      // const quantity = document.getElementById("quantity");
+      // const price = document.getElementById("price");
+      // const result = document.getElementById("result");
+
       function calculate() {
-        // Get user inputs
-        const quantity = parseFloat(document.getElementById("quantity").value);
-        const price = parseFloat(document.getElementById("price").value);
-        const result = document.getElementById("result");
+        const q = parseFloat(quantity.value);
+        const p = parseFloat(price.value);
 
-        // Clear previous result
-        result.textContent = "";
-
-        if (quantity > 0 && price > 0) {
-          // Calculate price per unit
-          const pricePerUnit = price / quantity;
-          result.textContent = `Price per unit is $${pricePerUnit.toFixed(2)}.`;
-        } else if (quantity > 0) {
-          result.textContent =
-            "Please enter the total price to calculate the price per unit.";
-        } else if (price > 0) {
-          result.textContent =
-            "Please enter the quantity to calculate the price per unit.";
-        } else {
-          result.textContent = "Please enter valid inputs.";
+        if (isNaN(q) || isNaN(p)) {
+          unit_price.innerHTML = "Please enter valid numbers";
+          return;
         }
+
+        const unitPrice = p / q;
+        // unit_price.innerHTML = `Unit Price: ${unitPrice.toFixed(2)}`;
+        unit_price.innerHTML = unitPrice.toFixed(2);
       }
+
+      function calculateNewPrice() {
+        const q = parseFloat(quantity.value);
+        const p = parseFloat(price.value);
+        const newQ = parseFloat(newQuantity.value);
+
+        if (isNaN(q) || isNaN(p) || isNaN(newQ)) {
+          newPrice.innerHTML = "Please enter valid numbers";
+          return;
+        }
+
+        const newP = (p / q) * newQ;
+        newPrice.innerHTML = `New Price: ${newP.toFixed(2)}`;
+      }
+
+      // document.addEventListener("input", calculate);
+      quantity.addEventListener("input", calculate);
+      price.addEventListener("input", calculate);
+      newQuantity.addEventListener("input", calculateNewPrice);
     </script>
   </body>
 </html>
