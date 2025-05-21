@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>100vh Fix for Mobile</title>
+    <style>
+      :root {
+        --vh: 1vh;
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
+      .full-screen {
+        height: calc(var(--vh) * 100);
+        border: 0px solid red;
+        background: linear-gradient(to top, #4facfe, #00f2fe);
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 2rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="full-screen">100vh Demo (with mobile fix)</div>
+
+    <script>
+      function setVHUnit() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty("--vh", `${vh}px`);
+      }
+
+      // Initial setup
+      setVHUnit();
+
+      // Update on resize
+      window.addEventListener("resize", setVHUnit);
+    </script>
+  </body>
+</html>
